@@ -1,0 +1,226 @@
+---
+swagger: "2.0"
+info:
+  description: "TODO"
+  version: "1.0.0"
+  title: "Awesome CV backend"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "amritbir1@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost"
+basePath: "/v2"
+schemes:
+- "http"
+paths:
+  /generate:
+    post:
+      tags:
+      - "default"
+      summary: "Generate CV"
+      description: ""
+      operationId: "generate_cv"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Json schema of CV"
+        required: true
+        schema:
+          $ref: "#/definitions/CV"
+      responses:
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "controllers.default_controller"
+definitions:
+  CV:
+    type: "object"
+    required:
+    - "address"
+    - "email"
+    - "mobile"
+    - "name"
+    - "position"
+    properties:
+      name:
+        type: "string"
+      position:
+        type: "string"
+      address:
+        type: "string"
+      mobile:
+        type: "string"
+      email:
+        type: "string"
+      github:
+        type: "string"
+        default: ""
+      linkedin:
+        type: "string"
+        default: ""
+      skype:
+        type: "string"
+        default: ""
+      education:
+        type: "array"
+        items:
+          $ref: "#/definitions/educationItems"
+      skills:
+        type: "array"
+        items:
+          $ref: "#/definitions/skillsItems"
+      experience:
+        type: "array"
+        items:
+          $ref: "#/definitions/experienceItems"
+    example:
+      skills:
+      - values: "values"
+        title: "title"
+      - values: "values"
+        title: "title"
+      skype: "skype"
+      github: "github"
+      address: "address"
+      education:
+      - address: "address"
+        school: "school"
+        endDate: "Present"
+        details:
+        - value: "value"
+        - value: "value"
+        title: "title"
+        startDate: "startDate"
+      - address: "address"
+        school: "school"
+        endDate: "Present"
+        details:
+        - value: "value"
+        - value: "value"
+        title: "title"
+        startDate: "startDate"
+      name: "name"
+      mobile: "mobile"
+      position: "position"
+      linkedin: "linkedin"
+      experience:
+      - address: "address"
+        endDate: "2000-01-23"
+        company: "company"
+        details:
+        - value: "value"
+        - value: "value"
+        title: "title"
+        startDate: "2000-01-23"
+      - address: "address"
+        endDate: "2000-01-23"
+        company: "company"
+        details:
+        - value: "value"
+        - value: "value"
+        title: "title"
+        startDate: "2000-01-23"
+      email: "email"
+    xml:
+      name: "CV"
+  educationItems:
+    type: "object"
+    required:
+    - "address"
+    - "endDate"
+    - "school"
+    - "startDate"
+    - "title"
+    properties:
+      school:
+        type: "string"
+      title:
+        type: "string"
+      address:
+        type: "string"
+      startDate:
+        type: "string"
+      endDate:
+        type: "string"
+        default: "Present"
+      details:
+        type: "array"
+        items:
+          $ref: "#/definitions/details"
+    example:
+      address: "address"
+      school: "school"
+      endDate: "Present"
+      details:
+      - value: "value"
+      - value: "value"
+      title: "title"
+      startDate: "startDate"
+    xml:
+      name: "educationItems"
+  skillsItems:
+    type: "object"
+    required:
+    - "title"
+    - "values"
+    properties:
+      title:
+        type: "string"
+      values:
+        type: "string"
+    example:
+      values: "values"
+      title: "title"
+    xml:
+      name: "educationItems"
+  experienceItems:
+    type: "object"
+    required:
+    - "address"
+    - "endDate"
+    - "startDate"
+    - "title"
+    properties:
+      company:
+        type: "string"
+      title:
+        type: "string"
+      address:
+        type: "string"
+      startDate:
+        type: "string"
+        format: "date"
+      endDate:
+        type: "string"
+        format: "date"
+      details:
+        type: "array"
+        items:
+          $ref: "#/definitions/details"
+    example:
+      address: "address"
+      endDate: "2000-01-23"
+      company: "company"
+      details:
+      - value: "value"
+      - value: "value"
+      title: "title"
+      startDate: "2000-01-23"
+    xml:
+      name: "educationItems"
+  details:
+    type: "object"
+    properties:
+      value:
+        type: "string"
+    example:
+      value: "value"
+    xml:
+      name: "details"
